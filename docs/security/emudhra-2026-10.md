@@ -14,9 +14,10 @@ Custom CA overrides and the operating system trust store need separate review.
 
 Run `python -m unittest discover -s tests -p 'test_tls*.py'` for offline trust checks.
 The checks inspect the actual HTTPX context and Requests CA file; they make no API
-requests. Before installing dependencies, bootstrap pip 26.2.2 or newer using the
-hash-pinned wheel in the PSF advisory below. App Engine's managed build installer
-and base-image trust remain provider responsibilities; an application certifi pin
+requests. Before installing dependencies, use Python 3.10 or newer and bootstrap
+pip 26.2.2 or newer using the hash-pinned wheel in the PSF advisory below. App
+Engine's managed build installer and base-image trust remain provider
+responsibilities; an application certifi pin
 does not update either one.
 
 CI runs the complete `tests` directory with `python -m pytest tests` on Python
@@ -29,3 +30,8 @@ Sources:
 - [Mozilla incident report](https://blog.mozilla.org/security/2026/10/20/protecting-firefox-users-following-the-compromise-of-emudhra-intermediate-certificates/)
 - [certifi 2026.10.19](https://github.com/certifi/python-certifi/releases/tag/2026.10.19)
 - [Python installer advisory](https://discuss.python.org/t/information-for-python-users-regarding-emudhra-emsign-ca-certificate-security-incident/109576)
+
+`MANIFEST.in` includes `requirements.txt` in source distributions because `setup.py`
+reads the dependency list from that file. This preserves all dependency pins,
+including certifi, when a wheel is rebuilt from a source distribution. Verify both
+package formats before publishing a new release; existing releases are unchanged.
