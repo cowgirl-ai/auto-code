@@ -18,14 +18,15 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x'
+        # The frozen application dependencies support CPython 3.12.
+        python-version: '3.12'
 
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
+        python -m pip install --upgrade "https://files.pythonhosted.org/packages/3f/06/3e4420302363fbb71be3c7f35ce042f54bfca330e3e66b3a2e3c4cca579f/pip-26.2.2-py3-none-any.whl#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70"
         pip install pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     - name: Run tests
       run: |
-        pytest tests --rootdir='./src' --disable-warnings
+        python -m pytest tests
