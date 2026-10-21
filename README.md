@@ -4,7 +4,9 @@ A programming CLI bot that digests Python files in a specified directory and upd
 
 ## Installation
 
-To install the necessary packages, run:
+Create and activate a fresh Python 3.12 virtual environment, then follow the
+[TLS installer prerequisites](docs/security/emudhra-2026-10.md) to patch its
+installer before running:
 
 ```zsh
 pip install cowgirl-ai-core cowgirl-ai-utils cowgirl-ai-auto-code

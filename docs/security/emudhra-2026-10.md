@@ -14,11 +14,17 @@ Custom CA overrides and the operating system trust store need separate review.
 
 Run `python -m unittest discover -s tests -p 'test_tls*.py'` for offline trust checks.
 The checks inspect the actual HTTPX context and Requests CA file; they make no API
-requests. Before installing dependencies, use Python 3.10 or newer and bootstrap
-pip 26.2.2 or newer using the hash-pinned wheel in the PSF advisory below. App
-Engine's managed build installer and base-image trust remain provider
-responsibilities; an application certifi pin
-does not update either one.
+requests. Before installing dependencies, create a fresh virtual environment on a
+maintained Python release, then bootstrap pip 26.2.2 or newer inside it using the
+hash-pinned wheel in the PSF advisory below. This upstream pip requires Python
+3.10 or newer; retire/recreate older unsupported environments before proceeding.
+
+For distro-managed Python, use the vendor's supported patched pip and CA updates
+or the fresh virtual environment path above. Do not bypass PEP 668 with
+`--break-system-packages`. Verify vendor backports through the vendor's security
+advisory and the effective CA bundle, rather than an upstream version number alone.
+App Engine's managed build installer and base-image trust remain provider
+responsibilities; an application certifi pin does not update either one.
 
 CI runs the complete `tests` directory with `python -m pytest tests` on Python
 3.12, matching the existing dependency lock and lint matrix. The former floating
@@ -35,3 +41,5 @@ Sources:
 reads the dependency list from that file. This preserves all dependency pins,
 including certifi, when a wheel is rebuilt from a source distribution. Verify both
 package formats before publishing a new release; existing releases are unchanged.
+
+See [externally managed Python environments](https://packaging.python.org/en/latest/specifications/externally-managed-environments/) for the distro/virtual-environment boundary.
