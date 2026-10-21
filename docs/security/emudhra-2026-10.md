@@ -19,6 +19,12 @@ hash-pinned wheel in the PSF advisory below. App Engine's managed build installe
 and base-image trust remain provider responsibilities; an application certifi pin
 does not update either one.
 
+CI runs the complete `tests` directory with `python -m pytest tests` on Python
+3.12, matching the existing dependency lock and lint matrix. The former floating
+`3.x` selection chose newer interpreters without compatible wheels for the frozen
+scientific dependencies. This change does not skip tests or loosen dependencies;
+newer Python versions need a separately validated dependency update.
+
 Sources:
 - [Mozilla incident report](https://blog.mozilla.org/security/2026/10/20/protecting-firefox-users-following-the-compromise-of-emudhra-intermediate-certificates/)
 - [certifi 2026.10.19](https://github.com/certifi/python-certifi/releases/tag/2026.10.19)

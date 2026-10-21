@@ -18,7 +18,8 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x'
+        # The frozen application dependencies support CPython 3.12.
+        python-version: '3.12'
 
     - name: Install dependencies
       run: |
@@ -28,4 +29,4 @@ jobs:
 
     - name: Run tests
       run: |
-        pytest tests --rootdir='./src' --disable-warnings
+        python -m pytest tests
